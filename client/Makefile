@@ -1,9 +1,15 @@
 all: client
 client: client.o com.o
-	g++ -std=c++11 client.o com.o -o client
+	mkdir -p ./out
+	g++ -std=c++11 ./out/client.o ./out/com.o -o out/client
 
 client.o: client.cpp
-	g++ -std=c++11 -g -c client.cpp
+	mkdir -p ./out
+	g++ -std=c++11 -g -c client.cpp -o ./out/client.o
 
 com.o: com.h com.cpp
-	g++ -std=c++11 -g -c com.cpp
+	mkdir -p ./out
+	g++ -std=c++11 -g -c com.cpp -o ./out/com.o
+
+clean:
+	rm -rf ./out
