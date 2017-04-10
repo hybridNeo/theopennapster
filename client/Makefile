@@ -1,7 +1,7 @@
 all: client
 client: client.o com.o
 	mkdir -p ./out
-	g++ -std=c++11 ./out/client.o ./out/com.o -o out/client
+	g++ -std=c++11 ./out/client.o ./out/com.o -o out/client -lboost_system
 
 client.o: client.cpp
 	mkdir -p ./out
