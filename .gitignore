@@ -1,0 +1,3 @@
+*.o
+server/out/server
+client/out/client

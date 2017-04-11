@@ -16,13 +16,15 @@ string fetch_file_path(string filename){
 string slurp(ifstream& in){
 	std::stringstream sstr;
 	sstr << in.rdbuf();
+	std::cout << "this is the string " << sstr.str() << std::endl;
 	return sstr.str();
 }
 
 string fetch_file_content(string file_path){
 
 	cout << "[STUB]" << "Fetching file " << file_path << endl;
-	std::ifstream ifs;
-	ifs.open(file_path, std::ifstream::in);
-	return slurp(ifs);
+	std::ifstream ifs(file_path);
+	std::string content((std::istreambuf_iterator<char>(ifs) ),(std::istreambuf_iterator<char>()));
+	cout << "The content is " << content << endl;
+	return content;
 }
