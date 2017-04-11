@@ -3,7 +3,11 @@
 #include "query.h"
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
+#include <fstream>
 using boost::asio::ip::tcp;
+
+
+
 void listen(){
 
 	try{
@@ -20,10 +24,11 @@ void listen(){
 			socket.read_some(boost::asio::buffer(buf), error);
 			std::cout << "[SERVER] File requested is: " << buf.data() << std::endl;
 			std::string file_path = fetch_file_path(buf.data());	
-			std::string file_content = fetch_file_content(file_path);
-			std::cout << "File content is " << file_content << std::endl;
+			std::string file_content = get_file_contents(file_path);//fetch_file_content(file_path);
+			// std::cout << "File content is " << file_content << std::endl;
 			boost::asio::write(socket, boost::asio::buffer(file_content), ignored_error);
 			socket.close();
+			break;
 		}
 	}catch( std::exception& e){
 		std::cerr << e.what() << std::endl;

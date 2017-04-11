@@ -20,11 +20,14 @@ string slurp(ifstream& in){
 	return sstr.str();
 }
 
-string fetch_file_content(string file_path){
+std::string get_file_contents(std::string filename)
+{
 
-	cout << "[STUB]" << "Fetching file " << file_path << endl;
-	std::ifstream ifs(file_path);
-	std::string content((std::istreambuf_iterator<char>(ifs) ),(std::istreambuf_iterator<char>()));
-	cout << "The content is " << content << endl;
-	return content;
+	std::ifstream t("/home/rahulmahadev/test.txt");
+	t.seekg(0, std::ios::end);
+	size_t size = t.tellg();
+	std::string buffer(size, ' ');
+	t.seekg(0);
+	t.read(&buffer[0], size); 
+	return buffer;
 }

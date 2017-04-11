@@ -2,7 +2,15 @@
 #include "com.h"
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
+#include <fstream>
+#include <string>
 using boost::asio::ip::tcp;
+
+void create_file(std::string data, std::string file_path){
+	std::ofstream out(file_path);
+	out << data;
+	out.close();
+}
 
 int send_msg(std::string message){
 	std::cout << "[CLIENT] Sending message to the server -- " << message << std::endl;
@@ -18,7 +26,8 @@ int send_msg(std::string message){
 	    	boost::system::error_code error;
 	    	socket.write_some(boost::asio::buffer(buf, message.size() ), error);	
 		socket.read_some(boost::asio::buffer(buf), error);
-		std::cout << "[CLIENT] Downloading file: " << buf.data() << std::endl;
+		std::cout << "[CLIENT] Downloading file: " << message << std::endl;
+		create_file(buf.data(), message);
 	    socket.close();		
 	}catch(std::exception& e){
 		std::cerr << e.what() << std::endl;
