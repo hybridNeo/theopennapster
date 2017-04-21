@@ -13,18 +13,24 @@ void create_file(std::string data, std::string file_path){
 }
 
 int send_msg(std::string message){
+
+	std::string ip = "127.0.0.1";
+	send_to_endpoint(ip, SERVER_PORT , message);
+}
+
+int send_to_endpoint(std::string& serv_ip , int serv_port, std::string& message){
 	std::cout << "[CLIENT] Sending message to the server -- " << message << std::endl;
 	boost::asio::io_service io_service;
-	boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::address::from_string("127.0.0.1"), SERVER_PORT);
+	boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::address::from_string(serv_ip), serv_port);
     
 	try{
 		boost::asio::ip::tcp::socket socket(io_service);
 		socket.connect(endpoint);
 
 		boost::array<char, 128> buf;
-  	    	std::copy(message.begin(),message.end(),buf.begin());
-	    	boost::system::error_code error;
-	    	socket.write_some(boost::asio::buffer(buf, message.size() ), error);	
+  	    std::copy(message.begin(),message.end(),buf.begin());
+	    boost::system::error_code error;
+	    socket.write_some(boost::asio::buffer(buf, message.size() ), error);	
 		socket.read_some(boost::asio::buffer(buf), error);
 		std::cout << "[CLIENT] Downloading file: " << message << std::endl;
 		create_file(buf.data(), message);
@@ -32,7 +38,5 @@ int send_msg(std::string message){
 	}catch(std::exception& e){
 		std::cerr << e.what() << std::endl;
 	}
-
-
 }
 
