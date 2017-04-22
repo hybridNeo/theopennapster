@@ -24,7 +24,8 @@ void listen(){
 			socket.read_some(boost::asio::buffer(buf), error);
 			std::cout << "[SERVER] File requested is: " << buf.data() << std::endl;
 			std::string file_path = fetch_file_path(buf.data());	
-			std::string file_content = get_file_contents(file_path);//fetch_file_content(file_path);
+			std::string file_content;
+			int res = get_file_contents(file_path, file_content);//fetch_file_content(file_path);
 			// std::cout << "File content is " << file_content << std::endl;
 			boost::asio::write(socket, boost::asio::buffer(file_content), ignored_error);
 			socket.close();

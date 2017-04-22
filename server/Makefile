@@ -1,7 +1,7 @@
 all: server
 server: server.o query.o com.o
 	mkdir -p ./out
-	g++ -std=c++11  out/server.o out/query.o out/com.o -o out/server -lboost_system
+	g++ -std=c++11  out/server.o out/query.o out/com.o -o out/server -lboost_filesystem -lboost_system
 	
 server.o: server.cpp
 	mkdir -p ./out 

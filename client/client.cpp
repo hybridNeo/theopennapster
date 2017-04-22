@@ -6,7 +6,8 @@ using namespace std;
 void get_input(string& str, char **argv, int argc){
 	for(int i = 1; i < argc ; ++i){
 		str.append(argv[i]);
-		str.append(" ");
+		if(i != argc-1)
+			str.append(" ");
 	}
 }
 
