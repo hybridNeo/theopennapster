@@ -33,7 +33,12 @@ int send_to_endpoint(std::string& serv_ip , int serv_port, std::string& message)
 	    socket.write_some(boost::asio::buffer(buf, message.size() ), error);	
 		socket.read_some(boost::asio::buffer(buf), error);
 		std::cout << "[CLIENT] Downloading file: " << message << std::endl;
-		create_file(buf.data(), message);
+		if(!strcmp(buf.data(),"0") ){
+			std::cout << "[CLIENT] File does not exist on the server.\n";
+		}else{
+			create_file(buf.data(), message);
+		}
+		
 	    socket.close();		
 	}catch(std::exception& e){
 		std::cerr << e.what() << std::endl;
